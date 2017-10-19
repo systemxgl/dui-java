@@ -5,30 +5,31 @@ import net.sf.json.JsonConfig;
 public class Demo {
 
 	public static void main(String[] args) {
-		String uuid = "ÄúµÄÉè±¸±àºÅ";
+		String uuid = "æ‚¨çš„è®¾å¤‡ç¼–å·";
 		// TODO Auto-generated method stub
 		/*
-		 * ÓÃ»§°ó¶¨ uuid:Éè±¸±àºÅ userid:ÄúÏµÍ³µÄÓÃ»§±àºÅ£¨×Ô¼º¶¨Òå£©×îºÃÊÇÊı×Ö
-		 * ·µ»Ø¸ñÊ½{"OpenUserId":160715,"Code":200,"Message":"³É¹¦"}
+		 * ç”¨æˆ·ç»‘å®š uuid:è®¾å¤‡ç¼–å· userid:æ‚¨ç³»ç»Ÿçš„ç”¨æˆ·ç¼–å·ï¼ˆè‡ªå·±å®šä¹‰ï¼‰æœ€å¥½æ˜¯æ•°å­—
+		 * è¿”å›æ ¼å¼{"OpenUserId":160715,"Code":200,"Message":"æˆåŠŸ"}
 		 */
-		String result = PrintHelper.userBind(uuid, "100");//100 ÄúÏµÍ³µÄÓÃ»§±àºÅ£¨×Ô¼º¶¨Òå£©×îºÃÊÇÊı×Ö
+		String result = PrintHelper.userBind(uuid, "100");//100 æ‚¨ç³»ç»Ÿçš„ç”¨æˆ·ç¼–å·ï¼ˆè‡ªå·±å®šä¹‰ï¼‰æœ€å¥½æ˜¯æ•°å­—
 		System.out.println(result);
 		/*
-		 * »ñÈ¡Éè±¸×´Ì¬ uuid:Éè±¸±àºÅ£»·µ»Ø¸ñÊ½£º{"State":0,"Code":200,"Message":"³É¹¦"}
+		 * è·å–è®¾å¤‡çŠ¶æ€ uuid:è®¾å¤‡ç¼–å·ï¼›è¿”å›æ ¼å¼ï¼š{"State":0,"Code":200,"Message":"æˆåŠŸ"}
 		 */
 		String result1 = PrintHelper.getDeviceState(uuid);
 		System.out.println(result1);
 
-		String content = "²âÊÔ´òÓ¡\n´ó·¢ËÍµÄ";
+		String content = "æµ‹è¯•æ‰“å°\nå¤§å‘é€çš„";
+		//æ ¼å¼è¯¦è§ https://github.com/systemxgl/dui-api æˆ– http://www.mstching.com/openapi.pdf
 		String jsonContent = "[{\"Alignment\":0,\"BaseText\":\"" + Utils.StringToBase64(content)
 				+ "\",\"Bold\":0,\"FontSize\":0,\"PrintType\":0}]";
-		String result2 = PrintHelper.printContent(uuid, jsonContent, "0");//¸Ä³ÉÓÃ»§Éè±¸°ó¶¨·µ»ØµÄOpenUserId
+		String result2 = PrintHelper.printContent(uuid, jsonContent, "0");//æ”¹æˆç”¨æˆ·è®¾å¤‡ç»‘å®šè¿”å›çš„OpenUserId
 		System.out.println(result2);
 
 		/*
-		 * »ñÈ¡´òÓ¡ÈÎÎñ×´Ì¬ taskId:ÈÎÎñ±àºÅ ·µ»Ø¸ñÊ½ {"State":1,"Code":200,"Message":"³É¹¦"}
+		 * è·å–æ‰“å°ä»»åŠ¡çŠ¶æ€ taskId:ä»»åŠ¡ç¼–å· è¿”å›æ ¼å¼ {"State":1,"Code":200,"Message":"æˆåŠŸ"}
 		 */
-		String result3 = PrintHelper.getPrintTaskState(0); //0¸Ä³ÉÈÎÎñ±àºÅ
+		String result3 = PrintHelper.getPrintTaskState(0); //0æ”¹æˆä»»åŠ¡ç¼–å·
 		System.out.println(result3);
 	}
 }
