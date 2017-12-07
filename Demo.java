@@ -25,7 +25,11 @@ public class Demo {
 				+ "\",\"Bold\":0,\"FontSize\":0,\"PrintType\":0}]";
 		String result2 = PrintHelper.printContent(uuid, jsonContent, "0");//改成用户设备绑定返回的OpenUserId
 		System.out.println(result2);
-
+		/*
+		 * 打印网页信息
+		 */
+		String printUrl="您要打印的网页地址";//例：http://www.open.mstching.com/print-demo.html
+		String result4 = PrintHelper.printHtmlContent(uuid, printUrl, "0");//改成用户设备绑定返回的OpenUserId
 		/*
 		 * 获取打印任务状态 taskId:任务编号 返回格式 {"State":1,"Code":200,"Message":"成功"}
 		 */
