@@ -8,7 +8,7 @@ import net.sf.json.JSONObject;
 
 public class PrintHelper {
 	/*
-	 * ÓÃ»§Éè±¸°ó¶¨
+	 * ç”¨æˆ·è®¾å¤‡ç»‘å®š
 	 */
 	public static String userBind(String uuid, String userId) {
 		String url = Utils.getUrl("/home/userbind");
@@ -27,7 +27,7 @@ public class PrintHelper {
 	}
 
 	/*
-	 * »ñÈ¡Éè±¸×´Ì¬
+	 * è·å–è®¾å¤‡çŠ¶æ€
 	 */
 	public static String getDeviceState(String uuid) {
 		String url = Utils.getUrl("/home/getdevicestate");
@@ -45,7 +45,7 @@ public class PrintHelper {
 	}
 
 	/*
-	 * ´òÓ¡ÄÚÈİ
+	 * æ‰“å°å†…å®¹
 	 */
 	public static String printContent(String uuid, String content, String openUserId) {
 		String url = Utils.getUrl("/home/printcontent2");
@@ -64,9 +64,28 @@ public class PrintHelper {
 		}
 		return result;
 	}
-
 	/*
-	 * »ñÈ¡´òÓ¡ÈÎÎñ×´Ì¬
+	 * æ‰“å°ç½‘é¡µä¿¡æ¯
+	 */
+	public static String printHtmlContent(String uuid, String printUrl, String openUserId) {
+		String url = Utils.getUrl("/home/printhtmlcontent");
+		JSONObject obj = new JSONObject();
+		obj.put("Uuid", uuid);
+		obj.put("PrintUrl", printUrl);
+		obj.put("OpenUserId", openUserId);
+		String data = obj.toString();
+		System.out.println(data);
+		String result = "";
+		try {
+			result = Utils.sendPost(url, data);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+	/*
+	 * è·å–æ‰“å°ä»»åŠ¡çŠ¶æ€
 	 */
 	public static String getPrintTaskState(long taskId) {
 		String url = Utils.getUrl("/home/getprinttaskstate");
