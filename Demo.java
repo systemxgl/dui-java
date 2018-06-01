@@ -20,7 +20,7 @@ public class Demo {
 		System.out.println(result1);
 
 		String content = "测试打印\n大发送的";
-		//格式详见 https://github.com/systemxgl/dui-api 或 http://www.mstching.com/openapi.pdf
+		//格式详见 http://www.mstching.com/home/openapi
 		String jsonContent = "[{\"Alignment\":0,\"BaseText\":\"" + Utils.StringToBase64(content)
 				+ "\",\"Bold\":0,\"FontSize\":0,\"PrintType\":0}]";
 		String result2 = PrintHelper.printContent(uuid, jsonContent, "0");//改成用户设备绑定返回的OpenUserId
