@@ -21,8 +21,11 @@ public class Demo {
 
 		String content = "测试打印\n大发送的";
 		//格式详见 http://www.mstching.com/home/openapi
-		String jsonContent = "[{\"Alignment\":0,\"BaseText\":\"" + Utils.StringToBase64(content)
-				+ "\",\"Bold\":0,\"FontSize\":0,\"PrintType\":0}]";
+		//=====
+		//注意：Utils.StringToBase64方法第二个参数 D1传GBK，D2传UTF-8
+		//=====
+		String jsonContent = "[{\"Alignment\":0,\"BaseText\":\"" + Utils.StringToBase64(content,"GBK")
+				+ "\",\"Bold\":0,\"FontSize\":0,\"PrintType\":0}]";		
 		String result2 = PrintHelper.printContent(uuid, jsonContent, "0");//改成用户设备绑定返回的OpenUserId
 		System.out.println(result2);
 		/*
