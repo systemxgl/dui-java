@@ -15,14 +15,14 @@ import java.util.Base64;
 
 public class Utils {
 	/*
-	 * ×é×°ÇëÇóUrl
+	 * ç»„è£…è¯·æ±‚Url
 	 */
 	public static String getUrl(String action) {
 		return String.format("%s%s%s", PrintConfig.baseUrl, action, createParams());
 	}
 
 	/*
-	 * ´´½¨Í¨ÓÃ²ÎÊı
+	 * åˆ›å»ºé€šç”¨å‚æ•°
 	 */
 	public static String createParams() {
 		String nonce = getNonce();
@@ -33,11 +33,17 @@ public class Utils {
 	}
 
 	/*
-	 * ×Ö·û´®×ªBase64
+	 * å­—ç¬¦ä¸²è½¬Base64
 	 */
-	public static String StringToBase64(String data) {
+	public static String StringToBase64(String data) throws UnsupportedEncodingException {
+		return StringToBase64(data,"GBK");		
+	}
+	/*
+	 * å­—ç¬¦ä¸²è½¬Base64
+	 */
+	public static String StringToBase64(String data,String charSet) {
 		try {
-			return Base64.getEncoder().encodeToString(data.getBytes("GBK"));
+			return Base64.getEncoder().encodeToString(data.getBytes(charSet));
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -46,7 +52,7 @@ public class Utils {
 	}
 
 	/*
-	 * ¼ÓÃÜ×Ö·û´®
+	 * åŠ å¯†å­—ç¬¦ä¸²
 	 */
 	public static String SignatureString(String appSecret, String timestamp, String nonce) {
 		String[] arrTmp = { appSecret, timestamp, nonce };
@@ -62,22 +68,22 @@ public class Utils {
 	}
 
 	/**
-	 * SHA1 °²È«¼ÓÃÜËã·¨
+	 * SHA1 å®‰å…¨åŠ å¯†ç®—æ³•
 	 * 
-	 * @data Òª¼ÓÃÜµÄ×Ö·û´®
+	 * @data è¦åŠ å¯†çš„å­—ç¬¦ä¸²
 	 * @return
 	 * @throws DigestException
 	 */
 	public static String SHA1(String data) throws DigestException {
 		try {
-			// Ö¸¶¨sha1Ëã·¨
+			// æŒ‡å®šsha1ç®—æ³•
 			MessageDigest digest = MessageDigest.getInstance("SHA-1");
 			digest.update(data.getBytes());
-			// »ñÈ¡×Ö½ÚÊı×é
+			// è·å–å­—èŠ‚æ•°ç»„
 			byte messageDigest[] = digest.digest();
 			// Create Hex String
 			StringBuffer hexString = new StringBuffer();
-			// ×Ö½ÚÊı×é×ª»»Îª Ê®Áù½øÖÆ Êı
+			// å­—èŠ‚æ•°ç»„è½¬æ¢ä¸º åå…­è¿›åˆ¶ æ•°
 			for (int i = 0; i < messageDigest.length; i++) {
 				String shaHex = Integer.toHexString(messageDigest[i] & 0xFF);
 				if (shaHex.length() < 2) {
@@ -89,50 +95,50 @@ public class Utils {
 
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
-			throw new DigestException("Ç©Ãû´íÎó£¡");
+			throw new DigestException("ç­¾åé”™è¯¯ï¼");
 		}
 	}
 
 	/*
-	 * »ñÈ¡Ëæ»úÊı×Ö×Ö·û´®
+	 * è·å–éšæœºæ•°å­—å­—ç¬¦ä¸²
 	 */
 	public static String getNonce() {
 		return String.valueOf((int) ((Math.random() * 9 + 1) * 100000000));
 	}
 
 	/*
-	 * »ñÈ¡Ê±¼ä´Á
+	 * è·å–æ—¶é—´æˆ³
 	 */
 	public static String getTimestamp() {
 		return String.valueOf(System.currentTimeMillis() / 1000);
 	}
 
 	/*
-	 * ·¢ËÍpostÇëÇó
+	 * å‘é€postè¯·æ±‚
 	 */
 	public static String sendPost(String url, String data) throws IOException {
 		OutputStreamWriter out = null;
 		BufferedReader reader = null;
 		String response = "";
 		try {
-			URL httpUrl = null; // HTTP URLÀà ÓÃÕâ¸öÀàÀ´´´½¨Á¬½Ó
-			// ´´½¨URL
+			URL httpUrl = null; // HTTP URLç±» ç”¨è¿™ä¸ªç±»æ¥åˆ›å»ºè¿æ¥
+			// åˆ›å»ºURL
 			httpUrl = new URL(url);
-			// ½¨Á¢Á¬½Ó
+			// å»ºç«‹è¿æ¥
 			HttpURLConnection conn = (HttpURLConnection) httpUrl.openConnection();
 			conn.setRequestMethod("POST");
 			conn.setRequestProperty("Content-Type", "application/json");
 			conn.setRequestProperty("connection", "keep-alive");
-			conn.setUseCaches(false);// ÉèÖÃ²»Òª»º´æ
+			conn.setUseCaches(false);// è®¾ç½®ä¸è¦ç¼“å­˜
 			conn.setInstanceFollowRedirects(true);
 			conn.setDoOutput(true);
 			conn.setDoInput(true);
 			conn.connect();
-			// POSTÇëÇó
+			// POSTè¯·æ±‚
 			out = new OutputStreamWriter(conn.getOutputStream());
 			out.write(data);
 			out.flush();
-			// ¶ÁÈ¡ÏìÓ¦
+			// è¯»å–å“åº”
 			reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 			String lines;
 			while ((lines = reader.readLine()) != null) {
@@ -140,14 +146,14 @@ public class Utils {
 				response += lines;
 			}
 			reader.close();
-			// ¶Ï¿ªÁ¬½Ó
+			// æ–­å¼€è¿æ¥
 			conn.disconnect();
 
 		} catch (Exception e) {
-			System.out.println("·¢ËÍ POST ÇëÇó³öÏÖÒì³££¡" + e);
+			System.out.println("å‘é€ POST è¯·æ±‚å‡ºç°å¼‚å¸¸ï¼" + e);
 			e.printStackTrace();
 		}
-		// Ê¹ÓÃfinally¿éÀ´¹Ø±ÕÊä³öÁ÷¡¢ÊäÈëÁ÷
+		// ä½¿ç”¨finallyå—æ¥å…³é—­è¾“å‡ºæµã€è¾“å…¥æµ
 		finally {
 			try {
 				if (out != null) {
