@@ -11,7 +11,7 @@ public class Demo {
 		 * 用户绑定 uuid:设备编号 userid:您系统的用户编号（自己定义）最好是数字
 		 * 返回格式{"OpenUserId":160715,"Code":200,"Message":"成功"}
 		 */
-		String result = PrintHelper.userBind(uuid, "100");//100 您系统的用户编号（自己定义）最好是数字
+		String result = PrintHelper.userBind(uuid, "100","设备名称");//100 您系统的用户编号（自己定义）最好是数字
 		System.out.println(result);
 		/*
 		 * 获取设备状态 uuid:设备编号；返回格式：{"State":0,"Code":200,"Message":"成功"}
