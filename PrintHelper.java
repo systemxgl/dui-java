@@ -10,11 +10,12 @@ public class PrintHelper {
 	/*
 	 * 用户设备绑定
 	 */
-	public static String userBind(String uuid, String userId) {
+	public static String userBind(String uuid, String userId,String deviceName) {
 		String url = Utils.getUrl("/home/userbind");
 		JSONObject obj = new JSONObject();
 		obj.put("Uuid", uuid);
 		obj.put("UserId", userId);
+		obj.put("DeviceName", deviceName);
 		String data = obj.toString();
 		String result = "";
 		try {
@@ -25,7 +26,6 @@ public class PrintHelper {
 		}
 		return result;
 	}
-
 	/*
 	 * 获取设备状态
 	 */
