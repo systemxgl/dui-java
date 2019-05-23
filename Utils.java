@@ -117,10 +117,11 @@ public class Utils {
 	 * 发送post请求
 	 */
 	public static String sendPost(String url, String data) throws IOException {
-		OutputStreamWriter out = null;
+		// OutputStreamWriter out = null;
 		BufferedReader reader = null;
 		String response = "";
 		try {
+			byte[] postDataBytes = data.getBytes("utf-8");
 			URL httpUrl = null; // HTTP URL类 用这个类来创建连接
 			// 创建URL
 			httpUrl = new URL(url);
@@ -129,20 +130,21 @@ public class Utils {
 			conn.setRequestMethod("POST");
 			conn.setRequestProperty("Content-Type", "application/json");
 			conn.setRequestProperty("connection", "keep-alive");
+			conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
 			conn.setUseCaches(false);// 设置不要缓存
 			conn.setInstanceFollowRedirects(true);
 			conn.setDoOutput(true);
 			conn.setDoInput(true);
 			conn.connect();
 			// POST请求
-			out = new OutputStreamWriter(conn.getOutputStream());
-			out.write(data);
-			out.flush();
-			// 读取响应
-			reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			conn.getOutputStream().write(postDataBytes);
+			/*
+			 * out = new OutputStreamWriter(conn.getOutputStream(),"utf-8");
+			 * out.write(data); out.flush();
+			 */
+			reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
 			String lines;
 			while ((lines = reader.readLine()) != null) {
-				lines = new String(lines.getBytes(), "utf-8");
 				response += lines;
 			}
 			reader.close();
@@ -156,9 +158,9 @@ public class Utils {
 		// 使用finally块来关闭输出流、输入流
 		finally {
 			try {
-				if (out != null) {
-					out.close();
-				}
+				/*
+				 * if (out != null) { out.close(); }
+				 */
 				if (reader != null) {
 					reader.close();
 				}
